@@ -6,10 +6,18 @@ import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
 import { useSelector } from "react-redux";
+import { useCheckAuthQuery } from "./rtkQuery/auth";
 
 const App = () => {
-  const user = useSelector((state) => state.auth);
-  console.log(user);
+  const { user, isLoggedIn } = useSelector((state) => state.auth);
+  // console.log(user, isLoggedIn);
+
+  const data = useCheckAuthQuery();
+
+  console.log(data);
+
+  // console.log(isError);
+
   const router = createBrowserRouter([
     {
       element: <Layout />,
