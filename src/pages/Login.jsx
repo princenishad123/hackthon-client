@@ -37,12 +37,14 @@ const Login = () => {
               className="outline-none  border-gray-300 py-2 w-full"
             />
 
-            <button type="input" className="">
+            <button type="button" className="">
               <IoEyeOutline />
             </button>
           </div>
 
-          <Button className="w-full rounded-full my-4">Login</Button>
+          <Button type="submit" className="w-full rounded-full my-4">
+            Login
+          </Button>
 
           <div className="flex justify-center items-center">
             <hr className=""></hr>
