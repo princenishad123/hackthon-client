@@ -25,13 +25,13 @@ const SignUp = () => {
     }
   };
   return (
-    <div className="w-full  lg:w-4/5 xl:w-[60%] mx-auto min-h-[75vh] bg-[#949fff] sm:rounded-3xl my-6 sm:shadow-lg overflow-hidden flex ">
+    <div className="w-full  lg:w-4/5 xl:w-[60%] mx-auto min-h-[75vh] bg-[#1a69e0] sm:rounded-3xl my-6 sm:shadow-lg overflow-hidden flex ">
       <div className="w-96 min-h-[75vh] p-4 flex flex-col items-center justify-around max-md:hidden">
         <h2 className="text-2xl font-bold text-center text-white">
-          Learn from world's Best Intructor arount the world
+          Signup forms are an essential way .
         </h2>
         <img
-          src="https://iluzialabs.com/wp-content/uploads/2023/03/3D-modeling-animation.png"
+          src="https://cdn3d.iconscout.com/3d/premium/thumb/secure-sign-in-3d-illustration-download-png-blend-fbx-gltf-file-formats--cybersecurity-login-authentication-digital-security-online-privacy-ufo-spaceship-and-activities-pack-people-illustrations-8932963.png?f=webp"
           alt=""
           className="w-64"
         />
@@ -84,13 +84,16 @@ const SignUp = () => {
             </span>
           </div>
 
-          <Button type="submit" className="w-full rounded-full my-4">
+          <Button
+            type="submit"
+            className="w-full bg-[#1a69e0] rounded-full my-4"
+          >
             {isLoading ? "Signing..." : "Sign up"}
           </Button>
 
           <div className="flex justify-center items-center">
             <hr className=""></hr>
-            <span className="block text-gray-500">Or Sign-up with</span>
+            <span className="block  text-gray-500">Or Sign-up with</span>
             <hr className=""></hr>
           </div>
         </form>

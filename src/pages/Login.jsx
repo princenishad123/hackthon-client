@@ -3,9 +3,13 @@ import React from "react";
 import { IoEyeOutline } from "react-icons/io5";
 import { useLoginMutation } from "@/rtkQuery/auth";
 import { toast } from "react-hot-toast";
+import { useSelector, useDispatch } from "react-redux";
+import { setLogin, setUser } from "../redux/AuthSlice";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
   const [login, { isLoading, isError }] = useLoginMutation();
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -13,21 +17,27 @@ const Login = () => {
       const values = Object.fromEntries(formData.entries());
 
       const res = await login(values);
+      console.log(res);
+      if (res.data) {
+        dispatch(setLogin(res.data.success));
+        dispatch(setUser(res.data.user));
 
-      if (res.data) toast.success(res.data.message);
+        toast.success(res.data.message);
+        navigate("/");
+      }
       if (res.error) toast.error(res.error.data.message);
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <div className="w-full  lg:w-4/5 xl:w-[60%] mx-auto min-h-[60vh] bg-[#949fff] sm:rounded-3xl my-6 sm:shadow-lg overflow-hidden flex ">
+    <div className="w-full  lg:w-4/5 xl:w-[60%] mx-auto min-h-[60vh] bg-[#4d23b8] sm:rounded-3xl my-6 sm:shadow-lg overflow-hidden flex ">
       <div className="w-96 min-h-[60vh] p-4 flex flex-col items-center justify-around max-md:hidden">
         <h2 className="text-2xl font-bold text-center text-white">
-          Learn from world's Best Intructor arount the world
+          Login with your credentials
         </h2>
         <img
-          src="https://iluzialabs.com/wp-content/uploads/2023/03/3D-modeling-animation.png"
+          src="https://cdn3d.iconscout.com/3d/premium/thumb/login-3d-illustration-download-in-png-blend-fbx-gltf-file-formats--security-access-key-password-ouuu-scenes-pack-people-illustrations-2526913.png?f=webp"
           alt=""
           className="w-64"
         />
@@ -35,7 +45,7 @@ const Login = () => {
 
       <div className="w-full md:w-3/4  bg-white sm:rounded-3xl flex justify-center max-sm:px-4">
         <form action="" onSubmit={handleLogin} className="w-full sm:w-96 py-12">
-          <h2 className="font-semibold text-xl my-4">Login</h2>
+          <h2 className="font-semibold text-2xl my-4 text-[#4d23b8] ">Login</h2>
 
           <div>
             <input

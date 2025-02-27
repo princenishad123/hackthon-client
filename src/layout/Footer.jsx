@@ -31,28 +31,28 @@ const Footer = () => {
   ];
   return (
     <div className="w-full min-h-auto bg-gray-800 text-white flex flex-col  justify-center">
-      <div className="flex justify-center gap-5 py-8">
-        <button className="size-12 content-center rounded-full border border-gray-500">
+      <div className="flex justify-center gap-5 py-8 flex-wrap">
+        <button className="size-8 sm:size-10 content-center rounded-full border border-gray-500">
           <IoLogoInstagram className="mx-auto" size={25} />
         </button>
-        <button className="size-12 content-center rounded-full border border-gray-500">
+        <button className="size-8 sm:size-10 content-center rounded-full border border-gray-500">
           <TiSocialLinkedin className="mx-auto" size={25} />
         </button>
-        <button className="size-12 content-center rounded-full border border-gray-500">
+        <button className="size-8 sm:size-10 content-center rounded-full border border-gray-500">
           <RiFacebookLine className="mx-auto" size={25} />
         </button>
-        <button className="size-12 content-center rounded-full border border-gray-500">
+        <button className="size-8 sm:size-10 content-center rounded-full border border-gray-500">
           <SlSocialYoutube className="mx-auto" size={25} />
         </button>
-        <button className="size-12 content-center rounded-full border border-gray-500">
+        <button className="size-8 sm:size-10 content-center rounded-full border border-gray-500">
           <RiTwitterXLine className="mx-auto" size={25} />
         </button>
       </div>
 
-      <ul className="mx-auto pb-8">
+      <ul className="sm:mx-auto pb-8">
         {links.map((e, idx) => (
           <NavLink key={idx} to={e.link}>
-            <li className="inline-block mx-2 px-2 py-1">{e.name}</li>
+            <li className="sm:inline-block mx-2 px-2 py-1">{e.name}</li>
           </NavLink>
         ))}
       </ul>

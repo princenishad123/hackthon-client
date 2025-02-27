@@ -1,23 +1,27 @@
 import React from "react";
 import { Button } from "./components/ui/button";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  useNavigate,
+} from "react-router-dom";
 import Layout from "./layout/Layout";
 import Home from "./pages/Home";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useCheckAuthQuery } from "./rtkQuery/auth";
-
+import { setLogin, setUser } from "./redux/AuthSlice";
+import useAuth from "./hook/useAuth";
+import Loader from "./components/customeComponents/Loader";
 const App = () => {
-  const { user, isLoggedIn } = useSelector((state) => state.auth);
-  // console.log(user, isLoggedIn);
+  const { isAuthenticated, isLoading } = useAuth();
 
-  const data = useCheckAuthQuery();
+  console.log(isAuthenticated, isLoading);
 
-  console.log(data);
-
-  // console.log(isError);
-
+  if (isLoading) {
+    return <Loader />;
+  }
   const router = createBrowserRouter([
     {
       element: <Layout />,
