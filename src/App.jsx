@@ -14,10 +14,10 @@ import { useCheckAuthQuery } from "./rtkQuery/auth";
 import { setLogin, setUser } from "./redux/AuthSlice";
 import useAuth from "./hook/useAuth";
 import Loader from "./components/customeComponents/Loader";
+import ViewDoctor from "./pages/ViewDoctor";
+import AllDoctors from "./pages/AllDoctors";
 const App = () => {
   const { isAuthenticated, isLoading } = useAuth();
-
-  console.log(isAuthenticated, isLoading);
 
   if (isLoading) {
     return <Loader />;
@@ -37,6 +37,14 @@ const App = () => {
         {
           path: "/login",
           element: <Login />,
+        },
+        {
+          path: "/doctor",
+          element: <ViewDoctor />,
+        },
+        {
+          path: "/all-doctors",
+          element: <AllDoctors />,
         },
       ],
     },

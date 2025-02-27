@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import React from "react";
@@ -6,12 +7,31 @@ import { useSignUpMutation } from "../rtkQuery/auth";
 import { toast } from "react-hot-toast";
 const SignUp = () => {
   const [signUp, { isLoading, isError }] = useSignUpMutation();
+  const [passwordValidation, setPasswordValidation] = useState(false);
+
+  function validatePassword(password) {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (regex.test(password)) {
+      return true;
+    } else {
+      setPasswordValidation(
+        "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character."
+      );
+
+      return false;
+    }
+  }
   const handleSignUp = async (e) => {
     e.preventDefault();
 
     try {
       const formData = new FormData(e.target);
       const values = Object.fromEntries(formData.entries());
+
+      let isPasswordValid = validatePassword(values.password);
+      if (!isPasswordValid) return;
 
       const res = await signUp(values);
 
@@ -24,6 +44,9 @@ const SignUp = () => {
       console.log(error);
     }
   };
+
+  const [togglePassword, setTogglePassword] = useState(false);
+
   return (
     <div className="w-full  lg:w-4/5 xl:w-[60%] mx-auto min-h-[75vh] bg-[#1a69e0] sm:rounded-3xl my-6 sm:shadow-lg overflow-hidden flex ">
       <div className="w-96 min-h-[75vh] p-4 flex flex-col items-center justify-around max-md:hidden">
@@ -65,15 +88,53 @@ const SignUp = () => {
           </div>
           <div className="flex items-center justify-between w-full border-b">
             <input
-              type="password"
+              type={togglePassword ? "text" : "password"}
               name="password"
+              onChange={() => setPasswordValidation(false)}
               placeholder="Password"
               className="outline-none  border-gray-300 py-2 w-full"
             />
 
-            <button type="button" className="">
+            <button
+              onClick={() => setTogglePassword(!togglePassword)}
+              type="button"
+              className=""
+            >
               <IoEyeOutline />
             </button>
+          </div>
+
+          {/* choose who are you */}
+          <div className="flex items-center">
+            <span>I'm</span>
+            <div className="radio-input ">
+              <label className="label">
+                <input
+                  type="radio"
+                  id="value-1"
+                  defaultChecked
+                  name="value-radio"
+                  defaultValue="value-1"
+                />
+                <p className="text">Doctor</p>
+              </label>
+            </div>
+            <div className="radio-input ">
+              <label className="label">
+                <input
+                  type="radio"
+                  id="value-1"
+                  defaultChecked
+                  name="value-radio"
+                  defaultValue="value-1"
+                />
+                <p className="text">Petient</p>
+              </label>
+            </div>
+          </div>
+
+          <div>
+            <p className="text-sm text-red-600">{passwordValidation}</p>
           </div>
 
           <div className="flex items-center justify-start gap-2 my-4">
