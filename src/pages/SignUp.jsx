@@ -29,7 +29,7 @@ const SignUp = () => {
     try {
       const formData = new FormData(e.target);
       const values = Object.fromEntries(formData.entries());
-
+      console.log(values);
       let isPasswordValid = validatePassword(values.password);
       if (!isPasswordValid) return;
 
@@ -113,8 +113,8 @@ const SignUp = () => {
                   type="radio"
                   id="value-1"
                   defaultChecked
-                  name="value-radio"
-                  defaultValue="value-1"
+                  name="iAm"
+                  defaultValue="doctor"
                 />
                 <p className="text">Doctor</p>
               </label>
@@ -125,8 +125,8 @@ const SignUp = () => {
                   type="radio"
                   id="value-1"
                   defaultChecked
-                  name="value-radio"
-                  defaultValue="value-1"
+                  name="iAm"
+                  defaultValue="patient"
                 />
                 <p className="text">Petient</p>
               </label>
