@@ -25,6 +25,8 @@ import { ProtectedRoute } from "./lib/ProtectedRoute";
 import DrProfile from "./pages/DrDashboard";
 import Dashboard from "./pages/Doctor/Dashboard";
 import DrDashboard from "./pages/DrDashboard";
+import BookAnAppointment from "./pages/BookAnAppointment";
+import MyPatients from "./pages/Doctor/MyPatients";
 const App = () => {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -57,15 +59,19 @@ const App = () => {
         },
         {
           path: "/account",
-          element: <UserProfile />,
+          element: <ProtectedRoute />, // Protecting this route
+          children: [{ path: "", element: <UserProfile /> }],
         },
-        {
-          path: "/dr-account",
-          element: <DrAccount />,
-        },
+
         {
           path: "/my-appointments",
-          element: <MyAppointment />,
+          element: <ProtectedRoute />, // Protecting this route
+          children: [{ path: "", element: <MyAppointment /> }],
+        },
+        {
+          path: "/book-an-appointment",
+          element: <ProtectedRoute />, // Protecting this route
+          children: [{ path: "", element: <BookAnAppointment /> }],
         },
         {
           path: "/dashboard",
@@ -76,12 +82,12 @@ const App = () => {
               element: <DrDashboard />,
             },
             {
-              path: "my-appointments",
-              element: <MyAppointment />,
+              path: "my-pateints",
+              element: <MyPatients />,
             },
             {
-              path: "profile",
-              element: <UserProfile />,
+              path: "dr-profile",
+              element: <DrAccount />,
             },
           ],
         },

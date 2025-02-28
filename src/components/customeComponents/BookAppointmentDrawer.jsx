@@ -66,8 +66,8 @@ const BookAppointmentDrawer = ({ doctorId }) => {
   return (
     <div>
       <Drawer>
-        <DrawerTrigger className="">
-          <Button className="my-4"> Book an appointment</Button>
+        <DrawerTrigger type="button" className="">
+          <Button className="my-4 w-full"> Book an appointment</Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>

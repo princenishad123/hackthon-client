@@ -8,10 +8,6 @@ const UserProfile = () => {
   const { user } = useAuth();
   const [data, setData] = useState();
 
-  const { data: doctorDetails, isLoading } = useGetDoctorProfileQuery();
-
-  console.log(doctorDetails);
-
   useEffect(() => {
     if (user) {
       setData(user);
@@ -59,28 +55,6 @@ const UserProfile = () => {
           </h3>
           <p className="text-gray-600">Gender: {data?.address || ""}</p>
           <p className="text-gray-600">Birthday: {data?.dob || ""}</p>
-          {data?.iAm === "doctor" && (
-            <>
-              <p className="text-gray-600">
-                Qualification: {doctorDetails?.qualification || ""}
-              </p>
-              <p className="text-gray-600">
-                Availability:{" "}
-                <span className="font-semibold text-green-600">
-                  {doctorDetails?.availability || ""}
-                </span>
-              </p>
-              <p className="text-gray-600">
-                Experience:{doctorDetails?.experience || ""}
-              </p>
-              <p className="text-gray-600">
-                Qualification:{doctorDetails?.qualification || ""}
-              </p>
-              <p className="text-gray-600">
-                Specialization:{doctorDetails?.specialization || ""}
-              </p>
-            </>
-          )}
         </div>
 
         {/* Buttons */}

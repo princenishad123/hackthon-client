@@ -2,28 +2,41 @@ import BookAppointmentDrawer from "@/components/customeComponents/BookAppointmen
 import DoctorCard from "@/components/customeComponents/DoctorCard";
 import { useGetDoctorByIdQuery } from "@/rtkQuery/auth";
 import { Loader } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { FaCheckCircle, FaInfoCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 const ViewDoctor = () => {
   const { id } = useParams();
   const { data, isLoading } = useGetDoctorByIdQuery({ id });
-  if (isLoading) {
-    return <Loader />;
-  }
 
   const handleBookAppointment = (formData) => {
     console.log(formData);
   };
+
+  const [formData, setFormData] = useState({
+    name: "",
+    problem: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log("User Data:", formData);
+    alert("Your problem has been submitted!");
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
   return (
     <div className="w-full py-8">
-      <div className="flex flex-col h-72 md:flex-row border md:items-center rounded-lg  p-4 bg-white w-full mx-auto gap-4">
+      <div className="flex flex-col h-auto md:flex-row border md:items-center rounded-lg  p-4 bg-white w-full mx-auto gap-4">
         <div className="flex-shrink-0 flex justify-start md:justify-start p-4">
           <img
-            src={
-              data?.image ||
-              "https://purepng.com/public/uploads/thumbnail/purepng.com-doctorsdoctorsdoctors-and-nursesa-qualified-practitioner-of-medicine-aclinicianmedical-practitionermale-doctornotepad-1421526856962nfokf.png"
-            }
+            src={data?.image || "https://i.postimg.cc/tJXSxHbp/d5.webp"}
             alt={data?.name}
             className="w-44 h-44 md:w-40 md:h-40 object-cover rounded-lg"
           />
@@ -50,11 +63,48 @@ const ViewDoctor = () => {
             Appointment fee:{" "}
             <span className="text-black">₹ {data?.consultationFee}</span>
           </p>
+        </div>
+      </div>
 
-          <BookAppointmentDrawer
-            handleBookAppointment={handleBookAppointment}
-            doctorId={data?.userId}
-          />
+      <div>
+        <div className="flex justify-center items-center">
+          <div className="bg-white p-6 rounded-lg border my-4 w-full max-w-md">
+            <h2 className="text-2xl font-semibold text-center mb-4">
+              Describe Your Problem
+            </h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block font-medium text-gray-700">Name:</label>
+                <input
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block font-medium text-gray-700">
+                  Body Problem:
+                </label>
+                <textarea
+                  name="problem"
+                  value={formData.problem}
+                  onChange={handleChange}
+                  rows="4"
+                  className="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-200"
+                  required
+                ></textarea>
+              </div>
+
+              <BookAppointmentDrawer
+                handleBookAppointment={handleBookAppointment}
+                doctorId={data?.userId}
+              />
+            </form>
+          </div>
         </div>
       </div>
 

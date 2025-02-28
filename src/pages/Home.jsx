@@ -2,12 +2,20 @@ import DoctorCard from "@/components/customeComponents/DoctorCard";
 import HowItsWorks from "@/components/customeComponents/HowItsWorks";
 import { Button } from "@/components/ui/button";
 import { useGetAllDoctorProfileQuery } from "@/rtkQuery/auth";
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const { data, isLoading } = useGetAllDoctorProfileQuery();
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const { data, isLoading } = useGetAllDoctorProfileQuery();
+  useEffect(() => {
+    if (user?.iAm === "doctor") {
+      navigate("/dashboard"); // Doctors ke liye dusra page
+    }
+  }, [user, navigate]);
+
   return (
     <>
       <div className="w-full flex min-h-[75vh] items-center justify-evenly flex-wrap">
@@ -25,9 +33,11 @@ const Home = () => {
             availability and reduce wait times. 🚀
           </p>
 
-          <Button className="bg-blue-600 px-8 py-2 ">
-            Book an Appointment
-          </Button>
+          <NavLink to={"/all-doctors"}>
+            <Button className="bg-blue-600 px-8 py-2 ">
+              Book an Appointment
+            </Button>
+          </NavLink>
         </div>
         <div>
           <img

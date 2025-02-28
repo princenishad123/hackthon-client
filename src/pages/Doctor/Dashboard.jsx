@@ -12,11 +12,11 @@ const Dashboard = () => {
           <NavLink to={"/dashboard"}>
             <li className="text-py-2 px-4 my-4">Dashbaord</li>
           </NavLink>
-          <NavLink to={"profile"}>
+          <NavLink to={"dr-profile"}>
             <li className="text-py-2 px-4 my-4">Profile</li>
           </NavLink>
 
-          <NavLink to={"my-appointments"}>
+          <NavLink to={"my-pateints"}>
             <li className="text-py-2 px-4 my-4">My Patients</li>
           </NavLink>
         </ul>

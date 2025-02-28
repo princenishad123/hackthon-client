@@ -16,10 +16,7 @@ const DoctorCard = ({
       <div className="w-64  cursor-pointer border rounded-lg hover:shadow-lg hover:scale-105 transition-all p-4  bg-white text-center">
         <div className="flex flex-col items-center">
           <img
-            src={
-              image ||
-              "https://www.pngarts.com/files/3/Female-Doctor-Transparent-Background-PNG.png"
-            }
+            src={image || "https://i.postimg.cc/tJXSxHbp/d5.webp"}
             alt={name}
             className="w-32 object-cover mb-4"
           />

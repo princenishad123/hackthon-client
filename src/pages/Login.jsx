@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoEyeOutline } from "react-icons/io5";
 import { useLoginMutation } from "@/rtkQuery/auth";
 import { toast } from "react-hot-toast";
@@ -7,13 +7,17 @@ import { useSelector, useDispatch } from "react-redux";
 import { IoEyeOffOutline } from "react-icons/io5";
 
 import { setLogin, setUser } from "../redux/AuthSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 const Login = () => {
   const [passwordValidation, setPasswordValidation] = useState(false);
+  const { user } = useSelector((state) => state.auth);
   const [login, { isLoading, isError }] = useLoginMutation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
+  // Getting the route where the user wanted to go
+  const redirectTo = searchParams.get("redirectTo") || "/";
   function validatePassword(password) {
     const regex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -45,7 +49,9 @@ const Login = () => {
         dispatch(setUser(res.data.user));
 
         toast.success(res.data.message);
-        navigate("/");
+
+        if (res.data.user.iAm === "doctor") return navigate("/dashboard");
+        navigate(redirectTo, { replace: true });
       }
       if (res.error) toast.error(res.error.data.message);
     } catch (error) {

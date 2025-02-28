@@ -1,5 +1,7 @@
 import DoctorCard from "@/components/customeComponents/DoctorCard";
+import { useGetAllDoctorProfileQuery } from "@/rtkQuery/auth";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const AllDoctors = () => {
   const doctorTypes = [
@@ -14,6 +16,10 @@ const AllDoctors = () => {
     "Ophthalmologist",
     "ENT Specialist",
   ];
+
+  const { data, isLoading } = useGetAllDoctorProfileQuery();
+
+  const navigate = useNavigate();
   return (
     <>
       <h2 className="text-xl font-semibold m-4">All Doctors</h2>
@@ -32,8 +38,23 @@ const AllDoctors = () => {
           </ul>
         </aside>
 
-        <div>
-          <DoctorCard />
+        <div className="flex flex-wrap gap-4">
+          {data?.map((doctor) => (
+            <div
+              onClick={() => navigate(`/doctor/${doctor._id}`)}
+              key={doctor._id}
+            >
+              <DoctorCard
+                availability={doctor.availability}
+                consultationFee={doctor.consultationFee}
+                name={doctor.name}
+                specialization={doctor.specialization}
+                experience={doctor.experience}
+                image={doctor.image}
+                id={doctor._id}
+              />
+            </div>
+          ))}
         </div>
       </div>{" "}
     </>

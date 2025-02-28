@@ -1,8 +1,29 @@
-import { Navigate } from "react-router-dom";
-import { useSelector } from "react-redux"; // or any auth context you use
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export const ProtectedRoute = ({ privateRoute }) => {
-  const user = useSelector((state) => state.auth.user); // Replace with your auth logic
+export const ProtectedRoute = () => {
+  const user = useSelector((state) => state.auth.user); // Redux se user data
+  const location = useLocation(); // Current route ka path
 
-  return user ? privateRoute : <Navigate to="/login" replace />;
+  return user ? (
+    <Outlet />
+  ) : (
+    <Navigate
+      to={`/login?redirectTo=${encodeURIComponent(location.pathname)}`}
+      replace
+    />
+  );
+};
+export const ProtectDoctor = () => {
+  const user = useSelector((state) => state.auth.user); // Redux se user data
+  const location = useLocation(); // Current route ka path
+
+  return user?.iAm === "doctor" ? (
+    <Outlet />
+  ) : (
+    <Navigate
+      to={`/login?redirectTo=${encodeURIComponent(location.pathname)}`}
+      replace
+    />
+  );
 };
