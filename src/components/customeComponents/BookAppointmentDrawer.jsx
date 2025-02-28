@@ -11,9 +11,16 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "../ui/button";
 import { Calendar } from "@/components/ui/calendar";
+import { useSelector } from "react-redux";
+import { useBookAppointmentMutation } from "@/rtkQuery/auth";
+import toast from "react-hot-toast";
 
-const BookAppointmentDrawer = () => {
+const BookAppointmentDrawer = ({ doctorId }) => {
+  const { user } = useSelector((state) => state.auth);
   const [date, setDate] = useState();
+  const [time, setTime] = useState(null);
+
+  const [bookAppointment, { data, isLoading }] = useBookAppointmentMutation();
   const timeSlots = [
     "09:00 AM",
     "09:30 AM",
@@ -42,7 +49,20 @@ const BookAppointmentDrawer = () => {
     "09:00 PM",
   ];
 
-  console.log(date);
+  const handleBookAppointment = async () => {
+    const appointId = Math.floor(Math.random() * 90000000 + 10000000);
+    const res = await bookAppointment({
+      doctorId,
+      userId: user?._id,
+      appointmentDate: date,
+      appointmentTime: time,
+      transactionId: "",
+      appointmentId: appointId,
+    });
+
+    if (res.data) return toast.success(res.data.message);
+  };
+
   return (
     <div>
       <Drawer>
@@ -68,14 +88,22 @@ const BookAppointmentDrawer = () => {
 
             <div>
               {timeSlots.map((e, idx) => (
-                <Button variant="outline" className="m-4" key={idx}>
+                <button
+                  onClick={() => setTime(e)}
+                  variant="outline"
+                  className={`m-3 py-1 px-2 rounded-sm border ${
+                    time === e ? "bg-black text-white " : ""
+                  }`}
+                  key={idx}
+                >
                   {e}
-                </Button>
+                </button>
               ))}
             </div>
           </div>
+
           <DrawerFooter>
-            <Button>Book</Button>
+            <Button onClick={handleBookAppointment}>Book</Button>
             <DrawerClose>
               <Button variant="outline">Cancel</Button>
             </DrawerClose>

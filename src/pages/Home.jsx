@@ -1,9 +1,13 @@
 import DoctorCard from "@/components/customeComponents/DoctorCard";
 import HowItsWorks from "@/components/customeComponents/HowItsWorks";
 import { Button } from "@/components/ui/button";
+import { useGetAllDoctorProfileQuery } from "@/rtkQuery/auth";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const { data, isLoading } = useGetAllDoctorProfileQuery();
+  const navigate = useNavigate();
   return (
     <>
       <div className="w-full flex min-h-[75vh] items-center justify-evenly flex-wrap">
@@ -60,12 +64,22 @@ const Home = () => {
         </p>
 
         <div className="flex items-center justify-center gap-8 flex-wrap my-12">
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
-          <DoctorCard />
+          {data?.map((doctor) => (
+            <div
+              key={doctor._id}
+              onClick={() => navigate(`/doctor/${doctor._id}`)}
+            >
+              <DoctorCard
+                availability={doctor.availability}
+                consultationFee={doctor.consultationFee}
+                name={doctor.name}
+                specialization={doctor.specialization}
+                experience={doctor.experience}
+                image={doctor.image}
+                id={doctor._id}
+              />
+            </div>
+          ))}
         </div>
       </section>
 

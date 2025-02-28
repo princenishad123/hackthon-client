@@ -35,8 +35,35 @@ export const api = createApi({
         // this is logout query
          checkAuth: builder.query({
             query:()=>'/auth/check-auth'
+         }),
+         
+
+        // this is logout query
+         getDoctorProfile: builder.query({
+            query:()=>'/auth/doctor-profile'
         }),
+         getAllDoctorProfile: builder.query({
+            query:()=>'/auth/all-doctors'
+        }),
+         getDoctorById: builder.query({
+            query:({id})=>  `/auth/get-doctor/${id}`
+         }),
+         
+
+
+        // here are appointment
+         bookAppointment: builder.mutation({
+            query: (data) => ({
+                url: "/appointment/book",
+                method: "POST",
+                body:data
+            })
+         }),
+         
+        getAppointmentById: builder.query({
+            query:({id})=>  `/appointment/${id}`
+         }),
     })
 })
 
-export const {useSignUpMutation,useLoginMutation,useLazyLogoutQuery,useCheckAuthQuery} = api;
+export const {useSignUpMutation,useLoginMutation,useLazyLogoutQuery,useCheckAuthQuery,useGetDoctorProfileQuery,useGetAllDoctorProfileQuery,useGetDoctorByIdQuery,useBookAppointmentMutation,useGetAppointmentByIdQuery} = api;

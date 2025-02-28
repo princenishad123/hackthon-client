@@ -5,8 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { logoutUser } from "../redux/AuthSlice";
 import toast from "react-hot-toast";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
 const Navbar = () => {
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+
   const [logout, { data, isLoading, isError }] = useLazyLogoutQuery();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -105,12 +117,43 @@ const Navbar = () => {
         </div>
 
         {isLoggedIn ? (
-          <Button
-            onClick={handleLogout}
-            className="rounded-full px-5 text-sm mx-1"
-          >
-            Logout
-          </Button>
+          // <Button
+          //   onClick={handleLogout}
+          //   className="rounded-full px-5 text-sm mx-1"
+          // >
+          //   Logout
+          // </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger>
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" sideOffset={5}>
+              <DropdownMenuLabel>My Account</DropdownMenuLabel>
+
+              <DropdownMenuSeparator />
+              <NavLink to="/account">
+                <DropdownMenuItem>Profile</DropdownMenuItem>
+              </NavLink>
+              {user?.iAm === "doctor" && (
+                <NavLink to="/dashboard">
+                  <DropdownMenuItem>dashboard</DropdownMenuItem>
+                </NavLink>
+              )}
+
+              <NavLink to={"my-appointments"}>
+                <DropdownMenuItem>My appointment</DropdownMenuItem>
+              </NavLink>
+              <DropdownMenuItem
+                className={"font-semibold"}
+                onClick={handleLogout}
+              >
+                Logout
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         ) : (
           <div>
             <button

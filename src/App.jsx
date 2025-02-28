@@ -16,6 +16,15 @@ import useAuth from "./hook/useAuth";
 import Loader from "./components/customeComponents/Loader";
 import ViewDoctor from "./pages/ViewDoctor";
 import AllDoctors from "./pages/AllDoctors";
+import ContactUs from "./pages/ContactUs";
+import About from "./pages/About";
+import MyAppointment from "./pages/MyAppointment";
+import UserProfile from "./pages/UserProfile";
+import DrAccount from "./pages/DrAccount";
+import { ProtectedRoute } from "./lib/ProtectedRoute";
+import DrProfile from "./pages/DrDashboard";
+import Dashboard from "./pages/Doctor/Dashboard";
+import DrDashboard from "./pages/DrDashboard";
 const App = () => {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -39,12 +48,54 @@ const App = () => {
           element: <Login />,
         },
         {
-          path: "/doctor",
+          path: "/doctor/:id",
           element: <ViewDoctor />,
         },
         {
           path: "/all-doctors",
           element: <AllDoctors />,
+        },
+        {
+          path: "/account",
+          element: <UserProfile />,
+        },
+        {
+          path: "/dr-account",
+          element: <DrAccount />,
+        },
+        {
+          path: "/my-appointments",
+          element: <MyAppointment />,
+        },
+        {
+          path: "/dashboard",
+          element: <Dashboard />,
+          children: [
+            {
+              path: "",
+              element: <DrDashboard />,
+            },
+            {
+              path: "my-appointments",
+              element: <MyAppointment />,
+            },
+            {
+              path: "profile",
+              element: <UserProfile />,
+            },
+          ],
+        },
+        {
+          path: "/dr-profile",
+          element: <DrProfile />,
+        },
+        {
+          path: "/contact-us",
+          element: <ContactUs />,
+        },
+        {
+          path: "/about-us",
+          element: <About />,
         },
       ],
     },
